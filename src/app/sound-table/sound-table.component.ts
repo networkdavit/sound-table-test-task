@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit,ChangeDetectorRef  } from '@angular/core';
+import { Component, ViewChild, OnInit  } from '@angular/core';
 import { SoundService } from '../sound.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,7 +11,7 @@ import { AudioService } from '../audio.service';
   styleUrls: ['./sound-table.component.css'],
   providers: [AudioService]
 })
-export class SoundTableComponent implements AfterViewInit {
+export class SoundTableComponent implements OnInit {
   soundRecordings = this.soundService.getSoundRecordings();
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'fileName', 'actions'];
@@ -21,9 +21,9 @@ export class SoundTableComponent implements AfterViewInit {
   selectedSound: string | null = null;
   showPlayer: boolean = false; 
 
-  constructor(private soundService: SoundService, private cdr: ChangeDetectorRef , private audioService: AudioService) {}
+  constructor(private soundService: SoundService , private audioService: AudioService) {}
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.dataSource.data = this.soundRecordings;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -33,8 +33,6 @@ export class SoundTableComponent implements AfterViewInit {
     this.audioService.stopSound();
     this.selectedSound = `/assets/mp3_files/${fileName}`;
     this.showPlayer = true;
-    console.log(this.selectedSound);
-    this.cdr.detectChanges(); 
+
   }
-  
 }
