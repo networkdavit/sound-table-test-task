@@ -1,0 +1,30 @@
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let recording"> {{ recording.id }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Sound Name </th>
+      <td mat-cell *matCellDef="let recording"> {{ recording.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fileName">
+      <th mat-header-cell *matHeaderCellDef> Sound Recording File Name </th>
+      <td mat-cell *matCellDef="let recording"> {{ recording.fileName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let recording">
+        <button mat-raised-button (click)="togglePlayer(recording.fileName)">Play</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<app-sound-player *ngIf="showPlayer" [selectedSound]="selectedSound"></app-sound-player>
